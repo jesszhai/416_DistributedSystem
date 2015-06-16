@@ -1,0 +1,34 @@
+ShiViz-Log.dat1 produced by running TestScripts/testTXCommit_forShiVizLog1.sh
+
+This shows a normal transaction completion. We have one TX manager with nodeId 1234, 
+and four workers with nodeId: (1111, 2222, 3333, 4444) all joined in Transaction #1, 
+and two more workers with nodeId: (5555, 6666) joined in Transaction #2. The workers 
+modify their own data objects, and then worker 1111 from Transaction #1 decides to 
+commit by sending a commit request (COMMIT) to the manager. Worker 5555 from 
+Transaction #2 decides to commit as well. All the workers send VOTE_COMMIT. The 
+manager collects all the votes for all the workers in the respective transactions.
+The manager then makes a decision to commit both transactions. It sends the 
+DECIDE_COMMIT message to all the workers in Transaction #1 first, and then 
+DECIDE_COMMIT to all the workers in Transaction #2. All workers in both transactions 
+receive the DECIDE_COMMIT message and commit locally, recording this to their 
+transaction log.
+
+
+ShiViz-Log.dat2 produced by running TestScripts/testDelayNeg_forShivizLog2.sh
+
+This is a transaction involving worker 1111 crashing after sending a response 
+to the manager, and the manager crashing after making the decision but before sending
+decision to the workers in the transaction. We begin the transaction and have 4 workers 
+(1111, 2222, 3333, 4444) join. We send DELAY_RESPONSE to 1111 with a delay of -1. 
+Eventually 2222 sends a commit request with COMMIT_CRASH. After receiving PREPARE_COMMIT
+from the manager, worker 1111 responds VOTE_COMMIT, and crashes (from delay = -1) after
+sending the message. Then, the manager, having collected all the votes from the workers, 
+decides to commit (writes it to log) but crashes before sending the decision to the 
+workers (COMMIT_CRASH). We restart worker 1111, and it recovers to find itself in the 
+uncertain state. Worker 1111 polls the manager to ask for the final decision. Since the 
+manager has crashed, it continues polling. The other workers also poll because they timed
+out from not getting a decision from the manager. We restart the manager, and when it 
+recovers it gets the polling message from the worker(s). Manager examines its transaction 
+log and sends the decision (DECIDE_COMMIT) to the polling workers. At the end every worker 
+will receive the commit decision and commit locally.
+

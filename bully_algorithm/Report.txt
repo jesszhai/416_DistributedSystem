@@ -1,0 +1,71 @@
+Interoperability
+
+Test #1
+William Zhang: cs416w2_a2_a1e8	Node 1883
+Our implementation is Node 1383
+
+Our implementations did not interoperate completely. After investigation, we concluded that William did not serialize his message in network byte order. So, in our logs, the vector  timestamp contained incorrect values random numbers after merging the William’s node’s timestamp to our vector.
+
+However, despite the fact that William didn't implement the network byte order. Our node did not crash nor timeout after it found itself being the only node alive in the group. 
+
+An issue that that William found with our implementation is that we were sending AYA messages at a constant rate. We corrected that by generating a random number everytime, so that our average is the AYATime specified in the parameter. 
+
+g1r7@lulu:cs416w2_a2_g1r7_h1r7$ cat ../../A2_TestWilliam/LogFileN1883.txt
+Starting N1883
+N1883 {"N1883" : 1}
+Starting NEW election with ID 1
+N1883 {"N1883" : 2}
+Declaring myself coordinator
+N1883 {"N1883" : 3}
+Sending COORD message to N1383 on localhost
+N1883 {"N1883" : 4}
+
+g1r7@lulu:cs416w2_a2_g1r7_h1r7$ cat LogFileN1383.txt
+Starting N1383
+N1383 {"N1383" : 1}
+Send ELECTION 1 to N1883
+N1383 {"N1383" : 2}
+Send ELECTION 1 N1883
+N1383 {"N1383" : 3,"N1527185408" : 67108864}
+
+=====================
+
+Test #2
+Next we tested our node with three other people simultaenously. 
+Justin Mew:  cs416w2_a2_d2d7       	Node 3141
+Matthew Kuo: cs416w2_a2_k6y7_l7t7  	Node 4444
+Calvin: (not sure what his repo is) Node 9999
+Our implementation is Node 2381
+
+Using the following cmd:
+./node 2381 GroupList.txt LogFileN2381.txt 10 5 0
+Since we are using 0 failure, every message should be successfully delivered. 
+
+Node 9999 did not implement network byte order. So only 3 nodes were left communicating with each other. During the run, the remaining three nodes were able to run an election and our node and Node 3141 received the COORD message from Node 4444. The two nodes were able to send AYA messages to Node 4444 and receive IAA from Node 4444 correctly. So this interoperation between three different student’s/group’s implementations was successful.
+After a while, Node 4444 (the coordinator) killed itself. Our node, Node 2381, started to send ELECT again, and it got an ANSWER from Node 3141, but no COORD message. After our node timed out waiting for COORD, it sent out another ELECT message. This continued
+for a while. It is weird that it didn’t get a COORD msg from Node 3141. I think it is because by the time he sends out the COORD message, our node had already timed out. Later, Node 9999 came back, interrupted the election between our node and N3141. Our node finally received a COORD message from N3141. 
+
+The only problem we noted with our implementation during this test is the vector timestamp. Please refer to the log below. Node 2381 received AYA from us, and sent back IAA. However, our printing log function printed the receiving of IAA before the sending of AYA. Because we have a separate thread sending AYA, we have mutex around the function for modifying the vector timestamp. However, updating vector timestamp and writing to log is two different function. What we should've done is to lock the entire process starting from updating our timestamp to writing to log. 
+
+Sending COORD to Node N2381
+N4444 {"N3141" : 2 , "N4444" : 14 , "N2381" : 3}
+Received AYA from N2381
+N4444 {"N3141" : 2 , "N4444" : 15 , "N2381" : 7}
+Sending IAA to Node N2381
+N4444 {"N3141" : 2 , "N4444" : 16 , "N2381" : 7}
+Received AYA from N2381
+N4444 {"N3141" : 6 , "N4444" : 19 , "N2381" : 9}
+
+Receive COORD from N4444
+N2381 {"N3141" : 2,"N4444" : 14,"N2381" : 6}
+Receive IAA from N4444
+N2381 {"N3141" : 2,"N4444" : 16,"N2381" : 8}
+Send AYA to N4444
+N2381 {"N3141" : 2,"N4444" : 16,"N2381" : 8}
+Send AYA to N4444
+N2381 {"N3141" : 2,"N4444" : 16,"N2381" : 9}
+
+
+
+
+

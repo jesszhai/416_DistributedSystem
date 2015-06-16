@@ -1,0 +1,142 @@
+Starting N1111
+N1111 {"N1111" : 1}
+Send BEGIN Transaction 1 to N1234
+N1111 {"N1111" : 2}
+Send JOIN Transaction 1 to N1234
+N1111 {"N1111" : 3}
+Receive BEGIN_SUCCESS 1 from N1234
+N1111 {"N1111" : 4,"N1234" : 3}
+Receive JOIN_SUCCESS 1 from N1234
+N1111 {"N1111" : 5,"N1234" : 7,"N2222" : 2}
+Update A value to 1111
+N1111 {"N1111" : 6,"N1234" : 7,"N2222" : 2}
+Receive PREPARE_COMMIT Transaction 1 from N1234
+N1111 {"N1111" : 7,"N1234" : 14,"N2222" : 5,"N3333" : 2,"N4444" : 2}
+SEND VOTE_COMMIT Transaction 1 to N1234
+N1111 {"N1111" : 8,"N1234" : 14,"N2222" : 5,"N3333" : 2,"N4444" : 2}
+Locally CRASH
+N1111 {"N1111" : 9,"N1234" : 14,"N2222" : 5,"N3333" : 2,"N4444" : 2}
+Worker RESTARTED
+N1111 {"N1111" : 10,"N1234" : 14,"N2222" : 5,"N3333" : 2,"N4444" : 2}
+SEND POLL_DECISION Transaction 1 to N1234
+N1111 {"N1111" : 11,"N1234" : 14,"N2222" : 5,"N3333" : 2,"N4444" : 2}
+SEND POLL_DECISION Transaction 1 to N1234
+N1111 {"N1111" : 12,"N1234" : 14,"N2222" : 5,"N3333" : 2,"N4444" : 2}
+Receive DECIDE_COMMIT Transaction 1 from N1234
+N1111 {"N1111" : 13,"N1234" : 30,"N2222" : 9,"N3333" : 8,"N4444" : 8}
+Starting N2222
+N2222 {"N2222" : 1}
+Send JOIN Transaction 1 to N1234
+N2222 {"N2222" : 2}
+Receive JOIN_SUCCESS 1 from N1234
+N2222 {"N2222" : 3,"N1234" : 5,"N1111" : 2}
+Update A value to 2222
+N2222 {"N2222" : 4,"N1234" : 5,"N1111" : 2}
+SEND COMMIT Transaction 1 to N1234
+N2222 {"N2222" : 5,"N1234" : 5,"N1111" : 2}
+Receive PREPARE_COMMIT Transaction 1 from N1234
+N2222 {"N2222" : 6,"N1234" : 13,"N1111" : 3,"N3333" : 2,"N4444" : 2}
+SEND VOTE_COMMIT Transaction 1 to N1234
+N2222 {"N2222" : 7,"N1234" : 13,"N1111" : 3,"N3333" : 2,"N4444" : 2}
+SEND POLL_DECISION Transaction 1 to N1234
+N2222 {"N2222" : 8,"N1234" : 13,"N1111" : 3,"N3333" : 2,"N4444" : 2}
+SEND POLL_DECISION Transaction 1 to N1234
+N2222 {"N2222" : 9,"N1234" : 13,"N1111" : 3,"N3333" : 2,"N4444" : 2}
+Receive DECIDE_COMMIT Transaction 1 from N1234
+N2222 {"N2222" : 10,"N1234" : 28,"N1111" : 8,"N3333" : 8,"N4444" : 8}
+Starting N3333
+N3333 {"N3333" : 1}
+Send JOIN Transaction 1 to N1234
+N3333 {"N3333" : 2}
+Receive JOIN_SUCCESS 1 from N1234
+N3333 {"N3333" : 3,"N1234" : 9,"N1111" : 3,"N2222" : 2}
+Update B value to 3333
+N3333 {"N3333" : 4,"N1234" : 9,"N1111" : 3,"N2222" : 2}
+Receive PREPARE_COMMIT Transaction 1 from N1234
+N3333 {"N3333" : 5,"N1234" : 15,"N1111" : 3,"N2222" : 5,"N4444" : 2}
+SEND VOTE_COMMIT Transaction 1 to N1234
+N3333 {"N3333" : 6,"N1234" : 15,"N1111" : 3,"N2222" : 5,"N4444" : 2}
+SEND POLL_DECISION Transaction 1 to N1234
+N3333 {"N3333" : 7,"N1234" : 15,"N1111" : 3,"N2222" : 5,"N4444" : 2}
+SEND POLL_DECISION Transaction 1 to N1234
+N3333 {"N3333" : 8,"N1234" : 15,"N1111" : 3,"N2222" : 5,"N4444" : 2}
+Receive DECIDE_COMMIT Transaction 1 from N1234
+N3333 {"N3333" : 9,"N1234" : 26,"N1111" : 8,"N2222" : 7,"N4444" : 8}
+Starting N4444
+N4444 {"N4444" : 1}
+Send JOIN Transaction 1 to N1234
+N4444 {"N4444" : 2}
+Receive JOIN_SUCCESS 1 from N1234
+N4444 {"N4444" : 3,"N1234" : 11,"N1111" : 3,"N2222" : 2,"N3333" : 2}
+Update ID String to imnode4444 
+N4444 {"N4444" : 4,"N1234" : 11,"N1111" : 3,"N2222" : 2,"N3333" : 2}
+Receive PREPARE_COMMIT Transaction 1 from N1234
+N4444 {"N4444" : 5,"N1234" : 16,"N1111" : 3,"N2222" : 5,"N3333" : 2}
+SEND VOTE_COMMIT Transaction 1 to N1234
+N4444 {"N4444" : 6,"N1234" : 16,"N1111" : 3,"N2222" : 5,"N3333" : 2}
+SEND POLL_DECISION Transaction 1 to N1234
+N4444 {"N4444" : 7,"N1234" : 16,"N1111" : 3,"N2222" : 5,"N3333" : 2}
+SEND POLL_DECISION Transaction 1 to N1234
+N4444 {"N4444" : 8,"N1234" : 16,"N1111" : 3,"N2222" : 5,"N3333" : 2}
+Receive DECIDE_COMMIT Transaction 1 from N1234
+N4444 {"N4444" : 9,"N1234" : 24,"N1111" : 8,"N2222" : 7,"N3333" : 6}
+Starting N1234
+N1234 {"N1234" : 1}
+Receive BEGIN Transaction 1 from N1111
+N1234 {"N1234" : 2,"N1111" : 2}
+SEND BEGIN_SUCCESS Transaction 1 to N1111
+N1234 {"N1234" : 3,"N1111" : 2}
+Receive JOIN Transaction 1 from N2222
+N1234 {"N1234" : 4,"N1111" : 2,"N2222" : 2}
+SEND JOIN_SUCCESS Transaction 1 to N2222
+N1234 {"N1234" : 5,"N1111" : 2,"N2222" : 2}
+Receive JOIN Transaction 1 from N1111
+N1234 {"N1234" : 6,"N1111" : 3,"N2222" : 2}
+SEND JOIN_SUCCESS Transaction 1 to N1111
+N1234 {"N1234" : 7,"N1111" : 3,"N2222" : 2}
+Receive JOIN Transaction 1 from N3333
+N1234 {"N1234" : 8,"N1111" : 3,"N2222" : 2,"N3333" : 2}
+SEND JOIN_SUCCESS Transaction 1 to N3333
+N1234 {"N1234" : 9,"N1111" : 3,"N2222" : 2,"N3333" : 2}
+Receive JOIN Transaction 1 from N4444
+N1234 {"N1234" : 10,"N1111" : 3,"N2222" : 2,"N3333" : 2,"N4444" : 2}
+SEND JOIN_SUCCESS Transaction 1 to N4444
+N1234 {"N1234" : 11,"N1111" : 3,"N2222" : 2,"N3333" : 2,"N4444" : 2}
+Receive COMMIT Transaction 1 from N2222
+N1234 {"N1234" : 12,"N1111" : 3,"N2222" : 5,"N3333" : 2,"N4444" : 2}
+SEND PREPARE_COMMIT Transaction 1 to N2222
+N1234 {"N1234" : 13,"N1111" : 3,"N2222" : 5,"N3333" : 2,"N4444" : 2}
+SEND PREPARE_COMMIT Transaction 1 to N1111
+N1234 {"N1234" : 14,"N1111" : 3,"N2222" : 5,"N3333" : 2,"N4444" : 2}
+SEND PREPARE_COMMIT Transaction 1 to N3333
+N1234 {"N1234" : 15,"N1111" : 3,"N2222" : 5,"N3333" : 2,"N4444" : 2}
+SEND PREPARE_COMMIT Transaction 1 to N4444
+N1234 {"N1234" : 16,"N1111" : 3,"N2222" : 5,"N3333" : 2,"N4444" : 2}
+Receive VOTE_COMMIT Transaction 1 from N2222
+N1234 {"N1234" : 17,"N1111" : 3,"N2222" : 7,"N3333" : 2,"N4444" : 2}
+Receive VOTE_COMMIT Transaction 1 from N3333
+N1234 {"N1234" : 18,"N1111" : 3,"N2222" : 7,"N3333" : 6,"N4444" : 2}
+Receive VOTE_COMMIT Transaction 1 from N4444
+N1234 {"N1234" : 19,"N1111" : 3,"N2222" : 7,"N3333" : 6,"N4444" : 6}
+Receive VOTE_COMMIT Transaction 1 from N1111
+N1234 {"N1234" : 20,"N1111" : 8,"N2222" : 7,"N3333" : 6,"N4444" : 6}
+Locally CRASH
+N1234 {"N1234" : 21,"N1111" : 8,"N2222" : 7,"N3333" : 6,"N4444" : 6}
+Manager RESTARTED
+N1234 {"N1234" : 22,"N1111" : 8,"N2222" : 7,"N3333" : 6,"N4444" : 6}
+Receive POLL_DECISION Transaction 1 from N4444
+N1234 {"N1234" : 23,"N1111" : 8,"N2222" : 7,"N3333" : 6,"N4444" : 8}
+SEND DECIDE_COMMIT Transaction 1 to N4444
+N1234 {"N1234" : 24,"N1111" : 8,"N2222" : 7,"N3333" : 6,"N4444" : 8}
+Receive POLL_DECISION Transaction 1 from N3333
+N1234 {"N1234" : 25,"N1111" : 8,"N2222" : 7,"N3333" : 8,"N4444" : 8}
+SEND DECIDE_COMMIT Transaction 1 to N3333
+N1234 {"N1234" : 26,"N1111" : 8,"N2222" : 7,"N3333" : 8,"N4444" : 8}
+Receive POLL_DECISION Transaction 1 from N2222
+N1234 {"N1234" : 27,"N1111" : 8,"N2222" : 9,"N3333" : 8,"N4444" : 8}
+SEND DECIDE_COMMIT Transaction 1 to N2222
+N1234 {"N1234" : 28,"N1111" : 8,"N2222" : 9,"N3333" : 8,"N4444" : 8}
+Receive POLL_DECISION Transaction 1 from N1111
+N1234 {"N1234" : 29,"N1111" : 12,"N2222" : 9,"N3333" : 8,"N4444" : 8}
+SEND DECIDE_COMMIT Transaction 1 to N1111
+N1234 {"N1234" : 30,"N1111" : 12,"N2222" : 9,"N3333" : 8,"N4444" : 8}

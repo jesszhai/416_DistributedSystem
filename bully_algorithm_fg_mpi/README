@@ -1,0 +1,14 @@
+
+This is the starting point for A4. If you do a 
+make it will build the bully program. 
+You can do a quick demo by doing make demo
+
+You should probably try a bunch of different runs 
+to get a sense of what is happening. Here are a few
+more to try. 
+
+/home/c/cs416/fgmpi/bin/mpirun -nfg 4 -n 4 ./bully
+/home/c/cs416/fgmpi/bin/mpirun -nfg 12 -n 8 ./bully
+/home/c/cs416/fgmpi/bin/mpirun -nfg 4 -n 1 ./bully
+/home/c/cs416/fgmpi/bin/mpirun -nfg 1 -n 4 ./bully
+

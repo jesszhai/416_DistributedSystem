@@ -1,0 +1,2 @@
+gcc -g   -c -o node.o node.c
+gcc -o node node.o   -pthread

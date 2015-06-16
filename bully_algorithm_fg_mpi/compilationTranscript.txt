@@ -1,0 +1,4 @@
+rm -f *.o *.a core  bully
+/home/c/cs416/fgmpi/bin/mpicc -g -D_REENTRANT -W -Wall -O3  -o bully.o -c bully.c
+/home/c/cs416/fgmpi/bin/mpicc -g -D_REENTRANT -W -Wall -O3 -lm   bully.o -o bully 
+Making bully ....
